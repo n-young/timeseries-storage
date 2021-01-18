@@ -3,11 +3,7 @@ mod error;
 mod server;
 mod client;
 
-use std::collections::HashMap;
-use std::sync::mpsc::channel;
 use std::env;
-
-use error::Error;
 
 fn main() {
     let args: Vec<String> = env::args().collect();

@@ -1,21 +1,19 @@
 use std::{
-    io::{self, BufReader, BufWriter, Read, Write},
     net::{TcpListener, TcpStream, Shutdown},
     thread,
-    time::Duration,
 };
 
 use bincode::{serialize_into, deserialize_from};
 
 use crate::{
     server::{
-        operators::Op,
         execute::execute,
         record::Record,
     },
 };
 
 fn postprocess(result: Vec<Record>) -> String {
+    let _ = result;
     String::from("Processed some records")
 }
 
@@ -28,7 +26,7 @@ fn handle_tcp_connection(mut stream: TcpStream) {
                 let response = match execute(op) {
                     Ok(Some(result)) => postprocess(result),
                     Ok(None) => String::from("Operation completed"),
-                    Err(Error) => format!("Error: {}", Error),
+                    Err(error) => format!("Error: {}", error),
                 };
                 serialize_into(&mut stream, &response).unwrap();
                 true

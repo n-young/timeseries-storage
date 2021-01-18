@@ -1,6 +1,5 @@
-use std::net::{TcpStream, Shutdown};
+use std::net::{TcpStream};
 use std::io::*;
-use std::str::from_utf8;
 use bincode::{serialize_into, deserialize_from};
 
 pub fn from_stdin() {

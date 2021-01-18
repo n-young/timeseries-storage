@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use serde_json::Result;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Select {
