@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub fn execute(operation: Op) -> Result<Option<Vec<Record>>, Error> {
-    let _ = operation;
+    println!("{:?}", operation);
     Ok(None)
 }
 
