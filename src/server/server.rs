@@ -1,6 +1,7 @@
 use std::{
     net::{TcpListener, TcpStream, Shutdown},
     thread,
+    io
 };
 
 use bincode::{serialize_into, deserialize_from};
@@ -38,8 +39,15 @@ fn handle_tcp_connection(mut stream: TcpStream) {
         },
         Err(_) => false,
     } {}
+
     println!("Terminating connection with {}", addr);
-    stream.shutdown(Shutdown::Both).unwrap();
+    match stream.shutdown(Shutdown::Both) {
+        Ok(_) => println!("Connection terminated"),
+        Err(err) => match err.kind() {
+            io::ErrorKind::NotConnected => println!("Connection already terminated"),
+            _ => panic!("Shutdown problem"),
+        }
+    }
 }
 
 pub fn server() {
