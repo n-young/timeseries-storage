@@ -13,7 +13,7 @@ pub enum Op {
 #[cfg(test)]
 mod test {
     use super::*;
-    use chrono::{NaiveDateTime, DateTime, Utc};
+    use chrono::{DateTime, NaiveDateTime, Utc};
     use std::collections::HashMap;
 
     #[test]
@@ -39,7 +39,9 @@ mod test {
         let mut variables = HashMap::new();
         variables.insert("usage_user".to_string(), 58.0);
         variables.insert("usage_system".to_string(), 2.0);
-        let timestamp = DateTime::parse_from_rfc3339("2016-06-13T17:43:50.1004002+00:00").unwrap().with_timezone(&Utc);
+        let timestamp = DateTime::parse_from_rfc3339("2016-06-13T17:43:50.1004002+00:00")
+            .unwrap()
+            .with_timezone(&Utc);
 
         let d: Op = serde_json::from_str(data).unwrap();
         let exp = Op::Write(Record::new("cpu".to_string(), labels, variables, timestamp));

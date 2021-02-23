@@ -12,7 +12,12 @@ pub struct Record {
 }
 
 impl Record {
-    pub fn new(name: String, labels: HashMap<String, String>, variables: HashMap<String, f64>, timestamp: DateTime<Utc>) -> Self {
+    pub fn new(
+        name: String,
+        labels: HashMap<String, String>,
+        variables: HashMap<String, f64>,
+        timestamp: DateTime<Utc>,
+    ) -> Self {
         Record {
             name,
             labels,
@@ -55,11 +60,11 @@ mod test {
             name: "cpu".to_string(),
             labels: labels,
             variables: variables,
-            timestamp: DateTime::parse_from_rfc3339("2016-06-13T17:43:50.1004002+00:00").unwrap().with_timezone(&Utc)
+            timestamp: DateTime::parse_from_rfc3339("2016-06-13T17:43:50.1004002+00:00")
+                .unwrap()
+                .with_timezone(&Utc),
         };
 
         assert_eq!(exp, d);
     }
 }
-
-

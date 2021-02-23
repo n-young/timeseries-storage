@@ -1,6 +1,6 @@
-use std::net::{TcpStream};
+use bincode::{deserialize_from, serialize_into};
 use std::io::*;
-use bincode::{serialize_into, deserialize_from};
+use std::net::TcpStream;
 
 pub fn from_stdin() {
     let mut stream = TcpStream::connect("127.0.0.1:12345").unwrap();

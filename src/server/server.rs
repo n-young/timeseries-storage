@@ -1,17 +1,12 @@
 use std::{
-    net::{TcpListener, TcpStream, Shutdown},
+    io,
+    net::{Shutdown, TcpListener, TcpStream},
     thread,
-    io
 };
 
-use bincode::{serialize_into, deserialize_from};
+use bincode::{deserialize_from, serialize_into};
 
-use crate::{
-    server::{
-        execute::execute,
-        record::Record,
-    },
-};
+use crate::server::{execute::execute, record::Record};
 
 fn postprocess(result: Vec<Record>) -> String {
     let _ = result;
@@ -36,7 +31,7 @@ fn handle_tcp_connection(mut stream: TcpStream) {
                 serialize_into(&mut stream, &response).unwrap();
                 true
             }
-        },
+        }
         Err(_) => false,
     } {}
 
@@ -46,7 +41,7 @@ fn handle_tcp_connection(mut stream: TcpStream) {
         Err(err) => match err.kind() {
             io::ErrorKind::NotConnected => println!("Connection already terminated"),
             _ => panic!("Shutdown problem"),
-        }
+        },
     }
 }
 

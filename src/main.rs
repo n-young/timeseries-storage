@@ -1,7 +1,7 @@
 //mod predicate;
+mod client;
 mod error;
 mod server;
-mod client;
 
 use std::env;
 
@@ -13,4 +13,3 @@ fn main() {
         server::server()
     }
 }
-

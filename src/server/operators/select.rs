@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Select {
     name: String,
-    predicate: Predicate
+    predicate: Predicate,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -60,7 +60,7 @@ mod test {
         let exp = Condition {
             lhs: Type::LabelKey(String::from("Key")),
             rhs: Type::LabelValue(String::from("Value")),
-            op: Op::Eq
+            op: Op::Eq,
         };
         assert_eq!(d, exp);
     }
@@ -78,13 +78,11 @@ mod test {
         "#;
 
         let d: Conditions = serde_json::from_str(data).unwrap();
-        let exp = Conditions::Leaf(
-            Condition {
-                lhs: Type::Variable(String::from("Var")),
-                rhs: Type::Metric(6.0),
-                op: Op::Gt
-            }
-        );
+        let exp = Conditions::Leaf(Condition {
+            lhs: Type::Variable(String::from("Var")),
+            rhs: Type::Metric(6.0),
+            op: Op::Gt,
+        });
         assert_eq!(d, exp);
 
         let data = r#"
@@ -101,26 +99,17 @@ mod test {
         "#;
         let d: Conditions = serde_json::from_str(data).unwrap();
         let exp = Conditions::And(
-            Box::new(
-                Conditions::Leaf(
-                    Condition {
-                        lhs: Type::LabelKey(String::from("Key")),
-                        rhs: Type::LabelValue(String::from("Value")),
-                        op: Op::Eq
-                    }
-                )
-            ),
-            Box::new(
-                Conditions::Leaf(
-                    Condition {
-                        lhs: Type::Variable(String::from("Var")),
-                        rhs: Type::Metric(6.0),
-                        op: Op::Gt
-                    }
-                )
-            ),
+            Box::new(Conditions::Leaf(Condition {
+                lhs: Type::LabelKey(String::from("Key")),
+                rhs: Type::LabelValue(String::from("Value")),
+                op: Op::Eq,
+            })),
+            Box::new(Conditions::Leaf(Condition {
+                lhs: Type::Variable(String::from("Var")),
+                rhs: Type::Metric(6.0),
+                op: Op::Gt,
+            })),
         );
         assert_eq!(d, exp);
     }
 }
-
