@@ -13,7 +13,7 @@ pub enum Op {
 #[cfg(test)]
 mod test {
     use super::*;
-    use chrono::{DateTime, NaiveDateTime, Utc};
+    use chrono::{DateTime, Utc};
     use std::collections::HashMap;
 
     #[test]
