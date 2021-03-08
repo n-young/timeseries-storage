@@ -25,6 +25,17 @@ impl Record {
             timestamp,
         }
     }
+
+    pub fn get_key(&self) -> String {
+        let mut temp_key: String = self.name.clone();
+        let mut sorted_labels: Vec<_> = self.labels.iter().collect();
+        sorted_labels.sort_by_key(|x| x.0);
+        for (key, value) in sorted_labels.iter() {
+            temp_key.push_str(key);
+            temp_key.push_str(value);
+        }
+        temp_key
+    }
 }
 
 #[cfg(test)]
