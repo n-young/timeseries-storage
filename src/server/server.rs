@@ -16,7 +16,6 @@ fn postprocess(result: Vec<Record>) -> String {
 
 fn handle_tcp_connection(mut stream: TcpStream, write_tx: Sender<Record>) {
     let addr = stream.peer_addr().unwrap();
-
     while match deserialize_from::<_, String>(&mut stream) {
         Ok(data) => {
             if let Ok(op) = serde_json::from_str(&data) {

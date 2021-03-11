@@ -5,6 +5,10 @@ use std::sync::mpsc::Sender;
 pub fn execute(operation: Op, tx: &Sender<Record>) -> Result<Option<Vec<Record>>, Error> {
     match operation {
         Op::Write(record) => execute_write(record, tx),
+        Op::Select(_) => {
+            println!("SELECT!");
+            Ok(None)
+        },
         _ => Ok(None),
     }
 }
