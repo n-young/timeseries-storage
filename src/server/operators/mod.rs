@@ -1,4 +1,4 @@
-mod select;
+pub mod select;
 
 use serde::{Deserialize, Serialize};
 
