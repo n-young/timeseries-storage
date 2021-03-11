@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::Display;
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -37,6 +38,12 @@ impl Record {
         temp_key
     }
 }
+
+// impl Display for Record {
+//     fn fmt() ->  {
+//         // TODO: Tostring
+//     }
+// }
 
 #[cfg(test)]
 mod test {
