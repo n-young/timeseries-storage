@@ -1,32 +1,32 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Select {
     name: String,
     predicate: Predicate,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Predicate {
     name: String,
     condition: Conditions,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub enum Conditions {
     Leaf(Condition),
     And(Box<Conditions>, Box<Conditions>),
     Or(Box<Conditions>, Box<Conditions>),
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Condition {
     lhs: Type,
     rhs: Type,
     op: Op,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub enum Type {
     LabelKey(String),
     LabelValue(String),
@@ -34,7 +34,7 @@ pub enum Type {
     Metric(f64),
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub enum Op {
     Eq,
     NEq,
