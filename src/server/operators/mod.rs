@@ -10,6 +10,8 @@ pub enum Op {
     Write(Record),
 }
 
+pub use select::Select;
+
 #[cfg(test)]
 mod test {
     use super::*;
