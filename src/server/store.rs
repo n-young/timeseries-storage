@@ -7,12 +7,14 @@ use std::{
 use crate::server::{execute::SelectRequest, operators::Select, record::Record};
 
 struct Series {
+    id: usize,
     records: Mutex<Vec<Record>>,
 }
 
 impl Series {
-    fn new(record: Record) -> Self {
+    fn new(id: usize, record: Record) -> Self {
         Series {
+            id: id,
             records: Mutex::new(vec![record]),
         }
     }
@@ -33,6 +35,8 @@ fn db_read(read_rx: Receiver<SelectRequest>, index: Arc<RwLock<HashMap<String, S
 }
 
 fn db_write(write_rx: Receiver<Record>, storage: Arc<RwLock<HashMap<String, Series>>>) {
+    let mut id: usize = 0;
+    let mut id_map: Vec<String> = Vec::new();
     // Receive write operations from the server
     for received in write_rx {
         let key: String = received.get_key();
@@ -49,7 +53,9 @@ fn db_write(write_rx: Receiver<Record>, storage: Arc<RwLock<HashMap<String, Seri
         // Replace read lock with a write lock
         drop(map);
         let mut map = storage.write().expect("RwLock poisoned");
-        map.insert(key, Series::new(received));
+        map.insert(key.clone(), Series::new(id.clone(), received));
+        id_map.push(key);
+        id += 1;
     }
 }
 
